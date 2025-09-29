@@ -46,13 +46,6 @@ enum {
 	TD_F12_TO_0,
 };
 
-// Tap Dance definitions
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_ESC_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_ESC, 0),
-    [TD_GRA_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_GRV, 0),
-    [TD_F12_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_F12, 0),
-};
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, 
@@ -70,3 +63,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
+
+// Tap Dance definitions
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_ESC_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_ESC, 0),
+    [TD_GRA_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_GRV, 0),
+    [TD_F12_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_F12, 0),
+};
