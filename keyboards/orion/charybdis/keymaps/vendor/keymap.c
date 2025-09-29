@@ -34,7 +34,7 @@ enum {
 tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Escape, twice for layer 0
     [TD_ESC_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_ESC, 0),
-    [TD_GRA_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_GRAVE, 0),
+    [TD_GRA_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_GRV, 0),
     [TD_F12_TO_0] = ACTION_TAP_DANCE_LAYER_MOVE(KC_F12, 0)
 };
 
