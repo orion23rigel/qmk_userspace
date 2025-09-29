@@ -6,6 +6,6 @@
 ._*
 
 # Firmware files
-*.hex
-*.bin
-*.uf2
+# *.hex
+# *.bin
+# *.uf2
