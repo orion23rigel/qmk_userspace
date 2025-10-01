@@ -1,6 +1,6 @@
 {
     "userspace_version": "1.0",
     "build_targets": [
-        ["orion/charybdis/4x6", "vendor"]
+        ["orion/charybdis/4x6", "orion"]
     ]
 }
