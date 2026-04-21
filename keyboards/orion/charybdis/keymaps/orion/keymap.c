@@ -78,7 +78,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // RDP-safe: hold modifier before key to avoid simultaneous report issue
         if (record->event.pressed) {
             register_mods(MOD_BIT(KC_LALT));
-            wait_ms(5);
+            wait_ms(15);
             tap_code(KC_LEFT);
             unregister_mods(MOD_BIT(KC_LALT));
         }
@@ -87,7 +87,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // RDP-safe: hold modifier before key to avoid simultaneous report issue
         if (record->event.pressed) {
             register_mods(MOD_BIT(KC_LALT));
-            wait_ms(5);
+            wait_ms(15);
             tap_code(KC_RGHT);
             unregister_mods(MOD_BIT(KC_LALT));
         }
@@ -96,7 +96,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // RDP-safe: hold modifier before key to avoid simultaneous report issue
         if (record->event.pressed) {
             register_mods(MOD_BIT(KC_LALT));
-            wait_ms(5);
+            wait_ms(15);
             tap_code(KC_F4);
             unregister_mods(MOD_BIT(KC_LALT));
         }
