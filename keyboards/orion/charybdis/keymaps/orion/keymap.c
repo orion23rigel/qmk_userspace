@@ -58,7 +58,7 @@ const uint16_t PROGMEM snipe_l_combo[] = {LALT_T(KC_D), LSFT_T(KC_F), COMBO_END}
 const uint16_t PROGMEM snipe_r_combo[] = {RSFT_T(KC_J), RALT_T(KC_K), COMBO_END};
 const uint16_t PROGMEM qk_boot_l_combo[] = {KC_4, KC_5, COMBO_END};
 const uint16_t PROGMEM qk_boot_r_combo[] = {KC_6, KC_7, COMBO_END};
-const uint16_t PROGMEM ee_clr_l_combo[] = {KC_R, KC_T, COMBO_END}
+const uint16_t PROGMEM ee_clr_l_combo[] = {KC_R, KC_T, COMBO_END};
 const uint16_t PROGMEM ee_clr_r_combo[] = {KC_Y, KC_U, COMBO_END};
 
 combo_t key_combos[] = {
