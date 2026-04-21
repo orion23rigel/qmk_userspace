@@ -54,8 +54,8 @@ enum combos {
 const uint16_t PROGMEM hold_1_combo[] = {LT(1,KC_X), LT(1,KC_DOT), COMBO_END};
 const uint16_t PROGMEM hold_2_combo[] = {LT(2,KC_C), LT(2,KC_COMM), COMBO_END};
 const uint16_t PROGMEM hold_3_combo[] = {LT(3,KC_V), LT(3,KC_M), COMBO_END};
-const uint16_t PROGMEM snipe_l_combo[] = {LALT_T(KC_D), LSFT_T(KC_F), COMBO_END};
-const uint16_t PROGMEM snipe_r_combo[] = {RSFT_T(KC_J), RALT_T(KC_K), COMBO_END};
+const uint16_t PROGMEM snipe_l_combo[] = {LT(2,KC_C), LT(3,KC_V), COMBO_END};
+const uint16_t PROGMEM snipe_r_combo[] = {LT(3,KC_M), LT(2,KC_COMM), COMBO_END};
 const uint16_t PROGMEM qk_boot_l_combo[] = {KC_4, KC_5, COMBO_END};
 const uint16_t PROGMEM qk_boot_r_combo[] = {KC_6, KC_7, COMBO_END};
 const uint16_t PROGMEM ee_clr_l_combo[] = {KC_R, KC_T, COMBO_END};
