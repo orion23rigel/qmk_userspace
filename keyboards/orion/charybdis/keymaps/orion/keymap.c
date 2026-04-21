@@ -45,6 +45,10 @@ enum combos {
   HOLD_LAYER_3,
   SNIPE_L,
   SNIPE_R,
+  QK_BOOT_L,
+  QK_BOOT_R,
+  EE_CLR_L,
+  EE_CLR_R,
 };
 
 const uint16_t PROGMEM hold_1_combo[] = {LT(1,KC_X), LT(1,KC_DOT), COMBO_END};
@@ -52,6 +56,10 @@ const uint16_t PROGMEM hold_2_combo[] = {LT(2,KC_C), LT(2,KC_COMM), COMBO_END};
 const uint16_t PROGMEM hold_3_combo[] = {LT(3,KC_V), LT(3,KC_M), COMBO_END};
 const uint16_t PROGMEM snipe_l_combo[] = {LALT_T(KC_D), LSFT_T(KC_F), COMBO_END};
 const uint16_t PROGMEM snipe_r_combo[] = {RSFT_T(KC_J), RALT_T(KC_K), COMBO_END};
+const uint16_t PROGMEM qk_boot_l_combo[] = {KC_4, KC_5, COMBO_END};
+const uint16_t PROGMEM qk_boot_r_combo[] = {KC_6, KC_7, COMBO_END};
+const uint16_t PROGMEM ee_clr_l_combo[] = {KC_R, KC_T, COMBO_END}
+const uint16_t PROGMEM ee_clr_r_combo[] = {KC_Y, KC_U, COMBO_END};
 
 combo_t key_combos[] = {
   [HOLD_LAYER_1] = COMBO(hold_1_combo, TO(1)),
@@ -59,7 +67,11 @@ combo_t key_combos[] = {
   [HOLD_LAYER_3] = COMBO(hold_3_combo, TO(3)),
   [SNIPE_L] = COMBO(snipe_l_combo, SNIPING),
   [SNIPE_R] = COMBO(snipe_r_combo, SNIPING),
-};
+  [QK_BOOT_L] = COMBO(qk_boot_l_combo, QK_BOOT),
+  [QK_BOOT_R] = COMBO(qk_boot_r_combo, QK_BOOT),
+  [EE_CLR_L] = COMBO(ee_clr_l_combo, EE_CLR),
+  [EE_CLR_R] = COMBO(ee_clr_r_combo, EE_CLR),
+  };
 
 // MACROS
 
@@ -129,8 +141,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_NO, KC_PGUP, KC_PGDN, TRAD_CONF, TRAD_INS, KC_PAST, KC_P1, KC_P2, KC_P3, KC_PSLS, KC_PDOT, 
 		KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0),
     [3] = LAYOUT(TD(TD_ESC_TO_0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, ENDASH, 
-		QK_BOOT, KC_DEL, KC_TRNS, DPI_RMOD, S_D_RMOD, LCTL(KC_F4), KC_TRNS, S_D_MOD, DPI_MOD, KC_TRNS, KC_TRNS, QK_BOOT, 
-		EE_CLR, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TRAD_CONF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EE_CLR, 
+		KC_TRNS, KC_DEL, KC_TRNS, DPI_RMOD, S_D_RMOD, LCTL(KC_F4), KC_TRNS, S_D_MOD, DPI_MOD, KC_TRNS, KC_TRNS, KC_TRNS, 
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TRAD_CONF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
 		KC_TRNS, KC_TRNS, DRGSCRL, SNIPING, TRAD_CONF, TRAD_INS, KC_TRNS, KC_TRNS, SNIPING, DRGSCRL, MS_BTN3, KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, 
 		KC_TRNS, MS_BTN3, KC_DEL, KC_TRNS, KC_TRNS),
 };
