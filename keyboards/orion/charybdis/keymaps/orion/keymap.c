@@ -16,18 +16,24 @@
  */
 #include QMK_KEYBOARD_H
 
+// Reinterpret sniping as whooshing
+#define WHOOSH_MODE          SNIPING_MODE
+#define WHOOSH_MODE_TOGGLE   SNIPING_MODE_TOGGLE
+#define WHOOSH_DPI_UP        POINTER_SNIPING_DPI_FORWARD
+#define WHOOSH_DPI_DOWN      POINTER_SNIPING_DPI_REVERSE
+
 #ifndef POINTING_DEVICE_ENABLE
 #    define DRGSCRL KC_NO
 #    define DPI_MOD KC_NO
 #    define S_D_MOD KC_NO
 #    define SNIPING KC_NO
-#endif // !POINTING_DEVICE_ENABLE
+#endif
 
 // Tap Dance declarations
 enum {
     TD_ESC_TO_0,
-	TD_TIL_TO_0,
-	TD_F12_TO_0,
+    TD_TIL_TO_0,
+    TD_F12_TO_0,
 };
 
 // Tap Dance definitions
@@ -38,13 +44,12 @@ tap_dance_action_t tap_dance_actions[] = {
 };
 
 // COMBOS
-
 enum combos {
   HOLD_LAYER_1,
   HOLD_LAYER_2,
   HOLD_LAYER_3,
-  SNIPE_L,
-  SNIPE_R,
+  WHOOSH_L,
+  WHOOSH_R,
   QK_BOOT_L,
   QK_BOOT_R,
   EE_CLR_L,
@@ -54,8 +59,8 @@ enum combos {
 const uint16_t PROGMEM hold_1_combo[] = {LT(1,KC_X), LT(1,KC_DOT), COMBO_END};
 const uint16_t PROGMEM hold_2_combo[] = {LT(2,KC_C), LT(2,KC_COMM), COMBO_END};
 const uint16_t PROGMEM hold_3_combo[] = {LT(3,KC_V), LT(3,KC_M), COMBO_END};
-const uint16_t PROGMEM snipe_l_combo[] = {LT(2,KC_C), LT(3,KC_V), COMBO_END};
-const uint16_t PROGMEM snipe_r_combo[] = {LT(3,KC_M), LT(2,KC_COMM), COMBO_END};
+const uint16_t PROGMEM whoosh_l_combo[] = {LT(2,KC_C), LT(3,KC_V), COMBO_END};
+const uint16_t PROGMEM whoosh_r_combo[] = {LT(3,KC_M), LT(2,KC_COMM), COMBO_END};
 const uint16_t PROGMEM qk_boot_l_combo[] = {KC_4, KC_5, COMBO_END};
 const uint16_t PROGMEM qk_boot_r_combo[] = {KC_6, KC_7, COMBO_END};
 const uint16_t PROGMEM ee_clr_l_combo[] = {KC_R, KC_T, COMBO_END};
@@ -65,35 +70,30 @@ combo_t key_combos[] = {
   [HOLD_LAYER_1] = COMBO(hold_1_combo, TO(1)),
   [HOLD_LAYER_2] = COMBO(hold_2_combo, TO(2)),
   [HOLD_LAYER_3] = COMBO(hold_3_combo, TO(3)),
-  [SNIPE_L] = COMBO(snipe_l_combo, SNIPING),
-  [SNIPE_R] = COMBO(snipe_r_combo, SNIPING),
+  [WHOOSH_L] = COMBO(whoosh_l_combo, WHOOSH_MODE),
+  [WHOOSH_R] = COMBO(whoosh_r_combo, WHOOSH_MODE),
   [QK_BOOT_L] = COMBO(qk_boot_l_combo, QK_BOOT),
   [QK_BOOT_R] = COMBO(qk_boot_r_combo, QK_BOOT),
   [EE_CLR_L] = COMBO(ee_clr_l_combo, EE_CLR),
   [EE_CLR_R] = COMBO(ee_clr_r_combo, EE_CLR),
-  };
+};
 
 // MACROS
-
 enum custom_keycodes {
     ENDASH = SAFE_RANGE,
-	TRAD_CONF,
-	TRAD_INS,
-	TRAD_CLOSE,
+    TRAD_CONF,
+    TRAD_INS,
+    TRAD_CLOSE,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case ENDASH:
         if (record->event.pressed) {
-            // when keycode ENDASH is pressed
             SEND_STRING( SS_DOWN(X_LALT) SS_TAP(X_P0) SS_TAP(X_P1) SS_TAP(X_P5) SS_TAP(X_P0) SS_UP(X_LALT) );
-        } else {
-            // when keycode ENDASH is released
         }
         break;
     case TRAD_CONF:
-        // RDP-safe: hold modifier before key to avoid simultaneous report issue
         if (record->event.pressed) {
             register_mods(MOD_BIT(KC_LALT));
             wait_ms(10);
@@ -102,7 +102,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
     case TRAD_INS:
-        // RDP-safe: hold modifier before key to avoid simultaneous report issue
         if (record->event.pressed) {
             register_mods(MOD_BIT(KC_LALT));
             wait_ms(10);
@@ -111,7 +110,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
     case TRAD_CLOSE:
-        // RDP-safe: hold modifier before key to avoid simultaneous report issue
         if (record->event.pressed) {
             register_mods(MOD_BIT(KC_LALT));
             wait_ms(10);
@@ -125,30 +123,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, 
-		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS, 
-		TRAD_INS, LCTL_T(KC_A), LGUI_T(KC_S), LALT_T(KC_D), LSFT_T(KC_F), KC_G, KC_H, RSFT_T(KC_J), RALT_T(KC_K), RGUI_T(KC_L), RCTL_T(KC_SCLN), KC_QUOT, 
-		TRAD_CONF, KC_Z, LT(1,KC_X), LT(2,KC_C), LT(3,KC_V), KC_B, KC_N, LT(3,KC_M), LT(2,KC_COMM), LT(1,KC_DOT), KC_SLSH, TRAD_CONF, 
-		DRGSCRL, KC_SPC, KC_BSPC, MS_BTN1, KC_ENT, MS_BTN1, MS_BTN2, MS_BTN2),
-    [1] = LAYOUT(TD(TD_TIL_TO_0), KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS, 
-		KC_NUM, KC_LBRC, KC_P7, KC_P8, KC_P9, KC_RBRC, KC_PSCR, KC_NO, KC_UP, KC_NO, TRAD_CLOSE, KC_TRNS, 
-		KC_PEQL, KC_PPLS, KC_P4, KC_P5, KC_P6, KC_PMNS, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, TRAD_CONF, KC_TRNS, 
-		KC_PDOT, KC_PAST, KC_P1, KC_P2, KC_P3, KC_PSLS, KC_NO, KC_PGUP, KC_PGDN, TRAD_CONF, TRAD_INS, KC_TRNS, 
-		KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0),
-    [2] = LAYOUT(TD(TD_F12_TO_0), KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, 
-		KC_TRNS, KC_PSCR, KC_NO, KC_UP, KC_NO, TRAD_CLOSE, KC_LBRC, KC_P7, KC_P8, KC_P9, KC_RBRC, KC_NUM, 
-		KC_TRNS, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, TRAD_CONF, KC_PPLS, KC_P4, KC_P5, KC_P6, KC_PMNS, KC_PEQL, 
-		KC_TRNS, KC_NO, KC_PGUP, KC_PGDN, TRAD_CONF, TRAD_INS, KC_PAST, KC_P1, KC_P2, KC_P3, KC_PSLS, KC_PDOT, 
-		KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0),
-    [3] = LAYOUT(TD(TD_ESC_TO_0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, ENDASH, 
-		KC_TRNS, KC_DEL, KC_TRNS, DPI_RMOD, S_D_RMOD, LCTL(KC_F4), KC_TRNS, S_D_MOD, DPI_MOD, KC_TRNS, KC_TRNS, KC_TRNS, 
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TRAD_CONF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-		KC_TRNS, KC_TRNS, DRGSCRL, SNIPING, TRAD_CONF, TRAD_INS, KC_TRNS, KC_TRNS, SNIPING, DRGSCRL, MS_BTN3, KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, 
-		KC_TRNS, MS_BTN3, KC_DEL, KC_TRNS, KC_TRNS),
+    [0] = LAYOUT(
+        KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS,
+        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS,
+        TRAD_INS, LCTL_T(KC_A), LGUI_T(KC_S), LALT_T(KC_D), LSFT_T(KC_F), KC_G, KC_H, RSFT_T(KC_J), RALT_T(KC_K), RGUI_T(KC_L), RCTL_T(KC_SCLN), KC_QUOT,
+        TRAD_CONF, KC_Z, LT(1,KC_X), LT(2,KC_C), LT(3,KC_V), KC_B, KC_N, LT(3,KC_M), LT(2,KC_COMM), LT(1,KC_DOT), KC_SLSH, TRAD_CONF,
+        DRGSCRL, KC_SPC, KC_BSPC, MS_BTN1, KC_ENT, MS_BTN1, MS_BTN2, MS_BTN2
+    ),
+
+    [1] = LAYOUT(
+        TD(TD_TIL_TO_0), KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
+        KC_NUM, KC_LBRC, KC_P7, KC_P8, KC_P9, KC_RBRC, KC_PSCR, KC_NO, KC_UP, KC_NO, TRAD_CLOSE, KC_TRNS,
+        KC_PEQL, KC_PPLS, KC_P4, KC_P5, KC_P6, KC_PMNS, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, TRAD_CONF, KC_TRNS,
+        KC_PDOT, KC_PAST, KC_P1, KC_P2, KC_P3, KC_PSLS, KC_NO, KC_PGUP, KC_PGDN, TRAD_CONF, TRAD_INS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0
+    ),
+
+    [2] = LAYOUT(
+        TD(TD_F12_TO_0), KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11,
+        KC_TRNS, KC_PSCR, KC_NO, KC_UP, KC_NO, TRAD_CLOSE, KC_LBRC, KC_P7, KC_P8, KC_P9, KC_RBRC, KC_NUM,
+        KC_TRNS, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, TRAD_CONF, KC_PPLS, KC_P4, KC_P5, KC_P6, KC_PMNS, KC_PEQL,
+        KC_TRNS, KC_NO, KC_PGUP, KC_PGDN, TRAD_CONF, TRAD_INS, KC_PAST, KC_P1, KC_P2, KC_P3, KC_PSLS, KC_PDOT,
+        KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0
+    ),
+
+    [3] = LAYOUT(
+        TD(TD_ESC_TO_0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, ENDASH,
+        KC_TRNS, KC_DEL, KC_TRNS, DPI_RMOD, WHOOSH_DPI_DOWN, LCTL(KC_F4), KC_TRNS, WHOOSH_DPI_UP, DPI_MOD, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TRAD_CONF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, DRGSCRL, WHOOSH_MODE, TRAD_CONF, TRAD_INS, KC_TRNS, KC_TRNS, WHOOSH_MODE, DRGSCRL, MS_BTN3, KC_TRNS,
+        KC_TRNS, MS_BTN3, KC_DEL, KC_TRNS, KC_TRNS
+    ),
 };
 // clang-format on
 
 #ifdef RGB_MATRIX_ENABLE
-// Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
