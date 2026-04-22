@@ -16,6 +16,12 @@
  */
 #include QMK_KEYBOARD_H
 
+// Reinterpret sniping as whooshing
+#define WHOOSH_MODE          SNIPING_MODE
+#define WHOOSH_MODE_TOGGLE   SNIPING_MODE_TOGGLE
+#define WHOOSH_DPI_UP        POINTER_SNIPING_DPI_FORWARD
+#define WHOOSH_DPI_DOWN      POINTER_SNIPING_DPI_REVERSE
+
 #ifndef POINTING_DEVICE_ENABLE
 #    define DRGSCRL KC_NO
 #    define DPI_MOD KC_NO
@@ -43,8 +49,8 @@ enum combos {
   HOLD_LAYER_1,
   HOLD_LAYER_2,
   HOLD_LAYER_3,
-  SNIPE_L,
-  SNIPE_R,
+  WHOOSH_L,
+  WHOOSH_R,
   QK_BOOT_L,
   QK_BOOT_R,
   EE_CLR_L,
@@ -54,8 +60,8 @@ enum combos {
 const uint16_t PROGMEM hold_1_combo[] = {LT(1,KC_X), LT(1,KC_DOT), COMBO_END};
 const uint16_t PROGMEM hold_2_combo[] = {LT(2,KC_C), LT(2,KC_COMM), COMBO_END};
 const uint16_t PROGMEM hold_3_combo[] = {LT(3,KC_V), LT(3,KC_M), COMBO_END};
-const uint16_t PROGMEM snipe_l_combo[] = {LT(2,KC_C), LT(3,KC_V), COMBO_END};
-const uint16_t PROGMEM snipe_r_combo[] = {LT(3,KC_M), LT(2,KC_COMM), COMBO_END};
+const uint16_t PROGMEM whoosh_l_combo[] = {LT(2,KC_C), LT(3,KC_V), COMBO_END};
+const uint16_t PROGMEM whoosh_r_combo[] = {LT(3,KC_M), LT(2,KC_COMM), COMBO_END};
 const uint16_t PROGMEM qk_boot_l_combo[] = {KC_4, KC_5, COMBO_END};
 const uint16_t PROGMEM qk_boot_r_combo[] = {KC_6, KC_7, COMBO_END};
 const uint16_t PROGMEM ee_clr_l_combo[] = {KC_R, KC_T, COMBO_END};
@@ -65,8 +71,8 @@ combo_t key_combos[] = {
   [HOLD_LAYER_1] = COMBO(hold_1_combo, TO(1)),
   [HOLD_LAYER_2] = COMBO(hold_2_combo, TO(2)),
   [HOLD_LAYER_3] = COMBO(hold_3_combo, TO(3)),
-  [SNIPE_L] = COMBO(snipe_l_combo, SNIPING),
-  [SNIPE_R] = COMBO(snipe_r_combo, SNIPING),
+  [WHOOSH_L] = COMBO(whoosh_l_combo, WHOOSH_MODE),
+  [WHOOSH_R] = COMBO(whoosh_r_combo, WHOOSH_MODE),
   [QK_BOOT_L] = COMBO(qk_boot_l_combo, QK_BOOT),
   [QK_BOOT_R] = COMBO(qk_boot_r_combo, QK_BOOT),
   [EE_CLR_L] = COMBO(ee_clr_l_combo, EE_CLR),
@@ -141,9 +147,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, KC_NO, KC_PGUP, KC_PGDN, TRAD_CONF, TRAD_INS, KC_PAST, KC_P1, KC_P2, KC_P3, KC_PSLS, KC_PDOT, 
 		KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0),
     [3] = LAYOUT(TD(TD_ESC_TO_0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, ENDASH, 
-		KC_TRNS, KC_DEL, KC_TRNS, DPI_RMOD, S_D_RMOD, LCTL(KC_F4), KC_TRNS, S_D_MOD, DPI_MOD, KC_TRNS, KC_TRNS, KC_TRNS, 
+		KC_TRNS, KC_DEL, KC_TRNS, DPI_RMOD, WHOOSH_DPI_DOWN, LCTL(KC_F4), KC_TRNS, WHOOSH_DPI_UP, DPI_MOD, KC_TRNS, KC_TRNS, KC_TRNS, 
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TRAD_CONF, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-		KC_TRNS, KC_TRNS, DRGSCRL, SNIPING, TRAD_CONF, TRAD_INS, KC_TRNS, KC_TRNS, SNIPING, DRGSCRL, MS_BTN3, KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, 
+		KC_TRNS, KC_TRNS, DRGSCRL, KC_TRNS, TRAD_CONF, TRAD_INS, KC_TRNS, KC_TRNS, KC_TRNS, DRGSCRL, MS_BTN3, KC_TRNS, KC_TRNS, MS_BTN3, KC_TRNS, 
 		KC_TRNS, MS_BTN3, KC_DEL, KC_TRNS, KC_TRNS),
 };
 // clang-format on

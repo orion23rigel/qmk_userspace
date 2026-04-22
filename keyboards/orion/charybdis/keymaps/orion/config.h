@@ -30,6 +30,24 @@
 #    define NO_ACTION_ONESHOT
 #endif // __arm__
 
+/* -------------------------------
+   Whooshing-mode DPI overrides
+   ------------------------------- */
+
+// Slow baseline DPI (default mode)
+#undef CHARYBDIS_MINIMUM_DEFAULT_DPI
+#define CHARYBDIS_MINIMUM_DEFAULT_DPI 200
+
+#undef CHARYBDIS_DEFAULT_DPI_CONFIG_STEP
+#define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200
+
+// Fast whooshing DPI (repurposed sniping mode)
+#undef CHARYBDIS_MINIMUM_SNIPING_DPI
+#define CHARYBDIS_MINIMUM_SNIPING_DPI 800
+
+#undef CHARYBDIS_SNIPING_DPI_CONFIG_STEP
+#define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200
+
 /* Charybdis-specific features. */
 
 #ifdef POINTING_DEVICE_ENABLE
