@@ -16,18 +16,18 @@
  */
 #include QMK_KEYBOARD_H
 
-// Reinterpret sniping as whooshing
-#define WHOOSH_MODE          SNIPING_MODE
-#define WHOOSH_MODE_TOGGLE   SNIPING_MODE_TOGGLE
-#define WHOOSH_DPI_UP        POINTER_SNIPING_DPI_FORWARD
-#define WHOOSH_DPI_DOWN      POINTER_SNIPING_DPI_REVERSE
-
 #ifndef POINTING_DEVICE_ENABLE
 #    define DRGSCRL KC_NO
 #    define DPI_MOD KC_NO
 #    define S_D_MOD KC_NO
 #    define SNIPING KC_NO
 #endif
+
+// Reinterpret sniping as whooshing
+#define WHOOSH_MODE          SNIPING_MODE
+#define WHOOSH_MODE_TOGGLE   SNIPING_MODE_TOGGLE
+#define WHOOSH_DPI_UP        POINTER_SNIPING_DPI_FORWARD
+#define WHOOSH_DPI_DOWN      POINTER_SNIPING_DPI_REVERSE
 
 // Tap Dance declarations
 enum {
