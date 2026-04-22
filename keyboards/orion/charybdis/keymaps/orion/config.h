@@ -21,31 +21,20 @@
 #define FLOW_TAP_TERM 70
 
 #ifdef VIA_ENABLE
+/* VIA configuration. */
 #    define DYNAMIC_KEYMAP_LAYER_COUNT 5
-#endif
+#endif // VIA_ENABLE
 
 #ifndef __arm__
+/* Disable unused features. */
 #    define NO_ACTION_ONESHOT
-#endif
+#endif // __arm__
 
-/* -------------------------------
-   Whooshing-mode DPI overrides
-   ------------------------------- */
+/* Charybdis-specific features. */
 
-// Slow baseline DPI (default mode)
-#undef CHARYBDIS_MINIMUM_DEFAULT_DPI
-#define CHARYBDIS_MINIMUM_DEFAULT_DPI 200
-
-#undef CHARYBDIS_DEFAULT_DPI_CONFIG_STEP
-#define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200
-
-// Fast whooshing DPI (repurposed sniping mode)
-#undef CHARYBDIS_MINIMUM_SNIPING_DPI
-#define CHARYBDIS_MINIMUM_SNIPING_DPI 800
-
-#undef CHARYBDIS_SNIPING_DPI_CONFIG_STEP
-#define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200
-
-/* Charybdis-specific features */
-// (You can enable auto pointer layer here if desired)
+#ifdef POINTING_DEVICE_ENABLE
+// Automatically enable the pointer layer when moving the trackball.  See also:
+// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS`
+// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD`
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#endif // POINTING_DEVICE_ENABLE
